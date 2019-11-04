@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import io from 'socket.io-client'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -12,39 +11,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import { Add } from '@material-ui/icons';
+import { themed } from '../../HOC/themed/themed';
 
 let socket;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3, 2),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  flex: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-  },
-  topicsWindow: {
-    width: '30%',
-    height: 300,
-    borderRight: '1px solid gray',
-  },
-  chatWindow: {
-    width: '70%',
-    height: 300,
-    padding: 30,
-  },
-  chatBox: {
-    width: '85%',
-  },
-  button: {
-    width: '15%',
-  },
-}));
 
 const Chat = (props) => {
   const {
@@ -52,13 +21,12 @@ const Chat = (props) => {
     userPhoto,
     chats,
     topics,
-    addMessage
+    addMessage,
+    classes
   } = props;
 
   const [textValue, setTextValue] = useState('');
   const [activeTopic, setActiveTopic] = useState(topics[0]);
-
-  const classes = useStyles();
 
   const sendMessage = () => {
     socket.emit('chat message', {
@@ -138,4 +106,4 @@ const Chat = (props) => {
   );
 };
 
-export default Chat;
+export default themed('components.Chat', Chat);
